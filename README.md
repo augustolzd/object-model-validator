@@ -1,6 +1,6 @@
 # Simple model validator.
 
-### Install
+### Install
 
 `npm i object-model-validator`
 
@@ -26,7 +26,7 @@
   // {name: 'Validate Object is Ok'}
 ```
 
-### Types availables
+### Types availables
 
 - Integer `types.integer`
 - Boolean `types.boolean`
