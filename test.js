@@ -5,6 +5,7 @@ const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
 const {types, ObjectModel} = require('./src')
+const Moment = require('moment')
 
 describe('String validation', () => {
   it('Valid string', () => {
@@ -142,3 +143,16 @@ describe('Dinamic propiety', () => {
     expect(model.fullName === 'Models Object').to.equal(true)
   })
 })
+
+describe('Moment Validation', () => {
+  it('Moment date with format', () => {
+    let model = new ObjectModel({
+      date: {
+        type: types.moment,
+        format: 'YYYY-MM-DD HH:mm:ss'
+      }
+    })
+    expect(typeof model.validate({date: Moment()}).date === 'string').to.equal(true)
+  })
+})
+

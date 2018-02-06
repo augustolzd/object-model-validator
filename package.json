@@ -1,11 +1,11 @@
 {
   "name": "object-model-validator",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Validate data models from object.",
   "main": "dist/index.js",
-  "repository" : { 
-    "type" : "git", 
-    "url" : "https://github.com/augustolzd/object-model-validator"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/augustolzd/object-model-validator"
   },
   "scripts": {
     "dist": "babel src/ -d dist",
@@ -29,5 +29,8 @@
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "mocha": "^5.0.0"
+  },
+  "dependencies": {
+    "moment": "^2.20.1"
   }
 }

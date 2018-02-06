@@ -21,6 +21,7 @@ exports.ObjectModel = function () {
 
     for (var i = 0; i < keys.length; i++) {
       if (data[keys[i]].type === undefined && data[keys[i]].v === undefined) throw new Error('Type not specified or invalid');
+      if (data[keys[i]].format !== undefined && typeof data[keys[i]].format !== 'string') throw new TypeError('Only string format');
       data[keys[i]].value = null;
       this[keys[i]] = data[keys[i]];
     }
@@ -53,11 +54,15 @@ exports.ObjectModel = function () {
           if (this[modelKeys[i]].parse !== undefined) {
             data[modelKeys[i]] = this[modelKeys[i]].parse(data) || data[modelKeys[i]];
           }
-
           if (!this[modelKeys[i]].type.v(data[modelKeys[i]])) throw new TypeError('The key value <| ' + modelKeys[i] + ' |> of the object needs to be ' + this[modelKeys[i]].type.e);
         } else {
           if (!this[modelKeys[i]].v(data[modelKeys[i]])) throw new TypeError('The key value <| ' + modelKeys[i] + ' |> of the object needs to be ' + this[modelKeys[i]].e);
         }
+
+        if (this[modelKeys[i]].format !== undefined && this[modelKeys[i]].type === types.moment) {
+          data[modelKeys[i]] = data[modelKeys[i]].format(this[modelKeys[i]].format);
+        }
+
         nModel[modelKeys[i]] = data[modelKeys[i]];
       }
       return nModel;

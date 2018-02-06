@@ -1,3 +1,4 @@
+const Moment = require('moment')
 module.exports = {
   'string': {
     v: (data) => {
@@ -36,5 +37,11 @@ module.exports = {
       return data instanceof Date
     },
     e: 'a Date Object'
+  },
+  'moment': {
+    v: (data) => {
+      return Moment.isMoment(data)
+    },
+    e: 'a moment object'
   }
 }
