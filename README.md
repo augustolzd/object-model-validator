@@ -1,5 +1,5 @@
 # Simple model validator.
-
+[![Build Status](https://travis-ci.org/augustolzd/object-model-validator.svg?branch=master)](https://travis-ci.org/augustolzd/object-model-validator)
 
 ## Install
 
