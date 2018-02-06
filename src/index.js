@@ -2,6 +2,9 @@
 const types = require('./types')
 exports.types = types
 
+/**
+ * It's A simple Object Model validation wrote in javascript
+ */
 exports.ObjectModel = class ObjectModel {
   constructor (data) {
     if (typeof data !== 'object' || Array.isArray(data)) throw new TypeError('Unexpected data object')
