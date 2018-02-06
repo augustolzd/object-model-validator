@@ -32,20 +32,20 @@ exports.ObjectModel = class ObjectModel {
 
     for (let i = 0; i < modelKeys.length; i++) {
       // check if value is optional
-      if (this[modelKeys[i]].optional === true && data[modelKeys[i]] === undefined) continue
+      if (this[modelKeys[i]].optional === true && data[modelKeys[i]] === undefined && this[modelKeys[i]].parse === undefined) continue
       if ((this[modelKeys[i]].optional === undefined || this[modelKeys[i]].optional === false) && data[modelKeys[i]] === undefined) {
         throw new Error(`${modelKeys[i]} is required`)
       }
       if (this[modelKeys[i]].type !== undefined) {
+        if (this[modelKeys[i]].parse !== undefined) {
+          data[modelKeys[i]] = this[modelKeys[i]].parse(data) || data[modelKeys[i]]
+        }
+
         if (!this[modelKeys[i]].type.v(data[modelKeys[i]])) throw new TypeError(`The key value <| ${modelKeys[i]} |> of the object needs to be ${this[modelKeys[i]].type.e}`)
       } else {
         if (!this[modelKeys[i]].v(data[modelKeys[i]])) throw new TypeError(`The key value <| ${modelKeys[i]} |> of the object needs to be ${this[modelKeys[i]].e}`)
       }
-      if (this[modelKeys[i]].parse !== undefined) {
-        nModel[modelKeys[i]] = this[modelKeys[i]].parse(data[modelKeys[i]]) || data[modelKeys[i]]
-      } else {
-        nModel[modelKeys[i]] = data[modelKeys[i]]
-      }
+      nModel[modelKeys[i]] = data[modelKeys[i]]
     }
     return nModel
   }

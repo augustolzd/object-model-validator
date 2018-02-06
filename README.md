@@ -15,7 +15,7 @@
   const model = new ObjectModel({
     name: types.string,
     parse: (data) => {
-      return `${data} is Ok`
+      return `${data.name} is Ok`
     }
   }))
 

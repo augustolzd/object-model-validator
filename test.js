@@ -9,9 +9,9 @@ const {types, ObjectModel} = require('./src')
 describe('String validation', () => {
   it('Valid string', () => {
     const model = new ObjectModel({
-      'name': types.string
-    }).validate({name: 'Model'})
-    expect(model.name === 'Model').to.equal(true)
+      'name': types.string,
+    })
+    expect(model.validate({name: 'Model', last_name: 'Parse'}).name === 'Model').to.equal(true)
   })
 
   it('Invalid string', () => {
