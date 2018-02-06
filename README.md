@@ -10,14 +10,14 @@
 ``` javascript
   'use strict'
 
-  const {types, ObjectModel} = require('./src')
+  const {types, ObjectModel} = require('object-model-validator')
 
   const model = new ObjectModel({
     name: types.string,
     parse: (data) => {
       return `${data.name} is Ok`
     }
-  }))
+  })
 
   let myObjectToValidate = {
     name: 'Validate object'
