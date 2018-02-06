@@ -7,7 +7,7 @@ exports.ObjectModel = class ObjectModel {
     if (typeof data !== 'object' || Array.isArray(data)) throw new TypeError('Unexpected data object')
     let keys = Object.keys(data)
 
-    for (let i = 0; i < keys.length; i++) {
+    for (let i = 0; i < keys.length; i++) {
       if (data[keys[i]].type === undefined && data[keys[i]].v === undefined) throw new Error('Type not specified or invalid')
       data[keys[i]].value = null
       this[keys[i]] = data[keys[i]]
@@ -39,7 +39,7 @@ exports.ObjectModel = class ObjectModel {
         if (!this[modelKeys[i]].v(data[modelKeys[i]])) throw new TypeError(`The key value <| ${modelKeys[i]} |> of the object needs to be ${this[modelKeys[i]].e}`)
       }
       if (this[modelKeys[i]].parse !== undefined) {
-        nModel[modelKeys[i]] = this[modelKeys[i]].parse(data[modelKeys[i]]) || data[modelKeys[i]]
+        nModel[modelKeys[i]] = this[modelKeys[i]].parse(data[modelKeys[i]]) || data[modelKeys[i]]
       } else {
         nModel[modelKeys[i]] = data[modelKeys[i]]
       }

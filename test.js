@@ -4,13 +4,13 @@ const expect = require('chai').expect
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
-const {types, validate, ObjectModel} = require('./src')
+const {types, ObjectModel} = require('./src')
 
 describe('String validation', () => {
   it('Valid string', () => {
     const model = new ObjectModel({
       'name': types.string
-    }).validate({name:'Model'})
+    }).validate({name: 'Model'})
     expect(model.name === 'Model').to.equal(true)
   })
 

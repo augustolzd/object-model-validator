@@ -9,7 +9,7 @@
 ``` javascript
   'use strict'
 
-  const {types, validate, ObjectModel} = require('./src')
+  const {types, ObjectModel} = require('./src')
 
   const model = new ObjectModel({
     name: types.string,
