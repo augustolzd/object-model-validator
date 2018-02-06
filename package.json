@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Validate data models from object.",
   "main": "dist/index.js",
+  "repository" : { 
+    "type" : "git", 
+    "url" : "https://github.com/augustolzd/object-model-validator"
+  },
   "scripts": {
     "dist": "babel src/ -d dist",
     "test": "mocha test.js"
