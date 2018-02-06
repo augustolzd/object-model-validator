@@ -23,5 +23,5 @@
   }
 
   console.log(model.validate(myObjectToValidate))
-  // print {name: 'Validate Object is Ok'}
+  // {name: 'Validate Object is Ok'}
 ```
