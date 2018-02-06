@@ -125,3 +125,20 @@ describe('Date type validation', () => {
     }
   })
 })
+
+describe('Dinamic propiety', () => {
+  it('New string', () => {
+    let model = new ObjectModel({
+      name: types.string,
+      lastName: types.string,
+      fullName: {
+        optional: true,
+        type: types.string,
+        parse: (data) => {
+          return `${data.name} ${data.lastName}`
+        }
+      }
+    }).validate({name: 'Models', lastName: 'Object'})
+    expect(model.fullName === 'Models Object').to.equal(true)
+  })
+})

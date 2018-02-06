@@ -26,6 +26,25 @@
   console.log(model.validate(myObjectToValidate))
   // {name: 'Validate Object is Ok'}
 ```
+### Custom Property
+```javascript
+let model = new ObjectModel({
+  name: types.string,
+  lastName: types.string,
+  fullName: {
+    optional: true,
+    type: types.string,
+    parse: (data) => {
+      return `${data.name} ${data.lastName}`
+    }
+  }
+}).validate({name: 'Models', lastName: 'Object'})
+
+console.log(model)
+// { name: 'Models', lastName: 'Object', fullName: 'Models Object' }
+
+
+```
 
 ## Types availables
 
