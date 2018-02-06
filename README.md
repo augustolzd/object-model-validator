@@ -1,10 +1,11 @@
 # Simple model validator.
 
-### Install
+
+## Install
 
 `npm i object-model-validator`
 
-### Usage
+## Usage
 
 ``` javascript
   'use strict'
@@ -26,10 +27,14 @@
   // {name: 'Validate Object is Ok'}
 ```
 
-### Types availables
+## Types availables
 
 - Integer `types.integer`
 - Boolean `types.boolean`
 - Object `types.object`
 - String `types.string`
 - Date `types.date`
+
+## License
+
+MIT
