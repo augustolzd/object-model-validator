@@ -12,23 +12,21 @@
 
   const {types, ObjectModel} = require('object-model-validator')
 
-  const model = new ObjectModel({
+  const model = await new ObjectModel({
     name: types.string,
     parse: (data) => {
       return `${data.name} is Ok`
     }
-  })
-
-  let myObjectToValidate = {
+  }).validate({
     name: 'Validate object'
-  }
-
-  console.log(model.validate(myObjectToValidate))
+  }).then(result => {
+    console.log(result)
+  })
   // {name: 'Validate Object is Ok'}
 ```
 ### Custom Property
 ```javascript
-let model = new ObjectModel({
+let model = await new ObjectModel({
   name: types.string,
   lastName: types.string,
   fullName: {
@@ -53,6 +51,15 @@ console.log(model)
 - Object `types.object`
 - String `types.string`
 - Date `types.date`
+- Moment `types.moment`
+
+## Declaration key options
+
+- `type` The type of value that the key must contain
+- `in` Array of available values
+- `parse` Function with data parameter equal to this and need return correct type value
+- `optional` If is required or not default false
+- `format` Only available in types.moment
 
 ## License
 

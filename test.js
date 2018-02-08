@@ -8,30 +8,28 @@ const {types, ObjectModel} = require('./src')
 const Moment = require('moment')
 
 describe('String validation', () => {
-  it('Valid string', () => {
-    const model = new ObjectModel({
+  it('Valid string', async () => {
+    const model = await new ObjectModel({
       'name': types.string
-    })
-    expect(model.validate({name: 'Model', last_name: 'Parse'}).name === 'Model').to.equal(true)
+    }).validate({name: 'Model', last_name: 'Parse'})
+    expect(model.name === 'Model').to.equal(true)
   })
 
-  it('Invalid string', () => {
-    const model = new ObjectModel({
-      'name': types.string
-    })
-    try {
-      model.validate({
-        name: true
-      })
-    } catch (e) {
+  it('Invalid string', async () => {
+    await new ObjectModel({
+      'name': {
+        name: 'custom field name',
+        type: types.string
+      }
+    }).validate({name: true}).catch(e => {
       expect(true).to.equal(true)
-    }
+    })
   })
 })
 
 describe('Integer validation', () => {
-  it('Valid integer', () => {
-    const model = new ObjectModel({
+  it('Valid integer', async () => {
+    const model = await new ObjectModel({
       'number': {
         type: types.integer
       }
@@ -41,14 +39,14 @@ describe('Integer validation', () => {
     expect(model.number === 1).to.equal(true)
   })
 
-  it('Invalid integer', () => {
+  it('Invalid integer', async () => {
     const model = new ObjectModel({
       'number': {
         type: types.integer
       }
     })
     try {
-      model.validate({
+      await model.validate({
         number: '1'
       })
     } catch (e) {
@@ -58,7 +56,7 @@ describe('Integer validation', () => {
 })
 
 describe('Required validation', () => {
-  it('Require key', () => {
+  it('Require key', async () => {
     const model = new ObjectModel({
       'name': {
         type: types.string
@@ -68,7 +66,7 @@ describe('Required validation', () => {
       }
     })
     try {
-      model.validate({
+      await model.validate({
         name: 'Models'
       })
     } catch (error) {
@@ -76,8 +74,8 @@ describe('Required validation', () => {
     }
   })
 
-  it('Optional key', () => {
-    const model = new ObjectModel({
+  it('Optional key', async () => {
+    const model = await new ObjectModel({
       'name': {
         type: types.string
       },
@@ -91,7 +89,7 @@ describe('Required validation', () => {
     expect(model.name === 'Models').to.equal(true)
   })
 
-  it('Optional key but check if has error', () => {
+  it('Optional key but check if has error', async () => {
     const model = new ObjectModel({
       'name': types.string,
       'mail': {
@@ -100,7 +98,7 @@ describe('Required validation', () => {
       }
     })
     try {
-      model.validate({
+      await model.validate({
         name: 'Models',
         mail: 1
       })
@@ -111,16 +109,16 @@ describe('Required validation', () => {
 })
 
 describe('Date type validation', () => {
-  it('Date valid', () => {
-    let model = new ObjectModel({date: types.date})
+  it('Date valid', async () => {
+    let model = await new ObjectModel({date: types.date})
     .validate({date: new Date()})
     expect(model.date instanceof Date).to.equal(true)
   })
 
-  it('Date invalid', () => {
+  it('Date invalid', async () => {
     let model = new ObjectModel({date: types.date})
     try {
-      model.validate({'date': '2018-02-05 12:00:00'})
+      await model.validate({'date': '2018-02-05 12:00:00'})
     } catch (error) {
       expect(true).to.equal(true)
     }
@@ -128,8 +126,8 @@ describe('Date type validation', () => {
 })
 
 describe('Dinamic propiety', () => {
-  it('New string', () => {
-    let model = new ObjectModel({
+  it('New string', async () => {
+    let model = await new ObjectModel({
       name: types.string,
       lastName: types.string,
       fullName: {
@@ -145,14 +143,39 @@ describe('Dinamic propiety', () => {
 })
 
 describe('Moment Validation', () => {
-  it('Moment date with format', () => {
-    let model = new ObjectModel({
+  it('Moment date with format', async () => {
+    let model = await new ObjectModel({
       date: {
         type: types.moment,
         format: 'YYYY-MM-DD HH:mm:ss'
       }
-    })
-    expect(typeof model.validate({date: Moment()}).date === 'string').to.equal(true)
+    }).validate({date: Moment()})
+    expect(typeof model.date === 'string').to.equal(true)
   })
 })
 
+describe('Custom key name', () => {
+  it('Custom Name', async () => {
+    await new ObjectModel({
+      name_something: {
+        type: types.string,
+        name: 'My custom key name'
+      }
+    }).validate({something: 'nothing'}).catch(e => {
+      expect(e.message === 'My custom key name is required').to.equal(true)
+    })
+  })
+})
+
+describe('Check values in parameters', () => {
+  it('In parameter', async () => {
+    await new ObjectModel({
+      number: {
+        type: types.integer,
+        in: [1, 2]
+      }
+    }).validate({number: 2}).then(r => {
+      expect(r.number === 2).to.equal(true)
+    })
+  })
+})
