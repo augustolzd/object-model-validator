@@ -34,7 +34,10 @@ exports.ObjectModel = class ObjectModel {
       for (let i = 0; i < modelKeys.length; i++) {
         if (this[modelKeys[i]].in !== undefined && Array.isArray(this[modelKeys[i]].in) === false) return reject(new TypeError('In propiety expect an array'))
         if (this[modelKeys[i]].in !== undefined && Array.isArray(this[modelKeys[i]].in) && this[modelKeys[i]].in.length === 0) return reject(new TypeError('In propiety can´t be empty'))
-        if (this[modelKeys[i]].optional === true && data[modelKeys[i]] === undefined && this[modelKeys[i]].parse === undefined) continue
+        if (this[modelKeys[i]].optional === true && data[modelKeys[i]] === undefined && this[modelKeys[i]].parse === undefined) {
+          delete nModel[modelKeys[i]]
+          continue
+        }
         if ((this[modelKeys[i]].optional === undefined || this[modelKeys[i]].optional === false) && data[modelKeys[i]] === undefined) {
           return reject(new Error(`${this[modelKeys[i]].name || modelKeys[i]} is required`))
         }
