@@ -147,9 +147,15 @@ describe('Moment Validation', () => {
     let model = await new ObjectModel({
       date: {
         type: types.moment,
-        format: 'YYYY-MM-DD HH:mm:ss'
+        format: 'YYYY-MM-DD HH:mm:ss',
+        parse: data => {
+          if (data.date !== undefined) {
+            return Moment(data.date)
+          }
+          return Moment()
+        }
       }
-    }).validate({date: Moment()})
+    }).validate({date: '2017-11-21 12'})
     expect(typeof model.date === 'string').to.equal(true)
   })
 })

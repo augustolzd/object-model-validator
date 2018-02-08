@@ -45,6 +45,10 @@ exports.ObjectModel = class ObjectModel {
         if ((this[modelKeys[i]].type || this[modelKeys[i]]).v(data[modelKeys[i]]) === false) {
           return reject(new TypeError(`The key value <| ${this[modelKeys[i]].name || modelKeys[i]} |> of the object needs to be ${this[modelKeys[i]].type !== undefined ? this[modelKeys[i]].type.e : this[modelKeys[i]].e}`))
         }
+
+        if (this[modelKeys[i]].type === types.moment && !data[modelKeys[i]].isValid()) {
+          return reject(new Error('Invalid date format'))
+        }
         if (this[modelKeys[i]].format !== undefined && this[modelKeys[i]].type === types.moment) {
           data[modelKeys[i]] = data[modelKeys[i]].format(this[modelKeys[i]].format)
         }
